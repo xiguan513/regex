@@ -42,7 +42,7 @@ class pachong(object):
             url="http://v.qq.com/x/list/movie?&%s" % (i[0])
 
             try:
-                request = urllib2.Request(self.url, headers=self.headers)
+                request = urllib2.Request(url, headers=self.headers)
                 response = urllib2.urlopen(request)
                 connect = response.read().decode('utf-8')
                 # print content
