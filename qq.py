@@ -5,6 +5,17 @@
 腾讯电影抓取前几页电影显示连接以及评分
 
 """
+"""
+create table movies (
+        `id` int(11) NOT NULL AUTO_INCREMENT,
+				`movieurl`  VARCHAR(500) not null,
+        `moviename` VARCHAR(200) not null,
+
+        PRIMARY key (`id`)
+        ) ENGINE=MyISAM DEFAULT CHARSET=UTF8;
+
+"""
+
 
 
 from bs4 import BeautifulSoup
@@ -23,6 +34,12 @@ class pachong(object):
         self.url='http://v.qq.com/x/list/movie'
         self.user_agent='Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'
         self.headers={'User-Agent': self.user_agent}
+        self.user="root"
+        self.password="123456"
+
+    def mysql(self):
+        pass
+
 
     def getPage(self):
         request = urllib2.Request(self.url, headers=self.headers)
@@ -52,8 +69,8 @@ class pachong(object):
                     score = movie[2].encode("utf-8").strip("\n")
                     pattern1 = re.compile('(.*?)</em>.*?score_s">(.*?)</em>', re.S)
                     items1 = re.findall(pattern1, score)
-                    print "电影连接： %s  电影名称： %s  " % (
-                        movie[0].encode('utf-8').strip("\n"), movie[1].encode('utf-8').strip("\n"))
+                    items2=re.search(r'<a href=(.*)',movie[0])
+                    print items2.group(1),movie[1]
                     for num in items1:
                         num = num[0] + num[1]
                         print "评分： %s" % num
